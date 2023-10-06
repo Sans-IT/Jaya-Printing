@@ -13,7 +13,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data } = await axios.get(
-    `${process.env.URL}/api/post?title=${params.item}`
+    `${process.env.URL}/api/post?title=${params.item.split('-').join(' ')}`
   );
 
   return {
