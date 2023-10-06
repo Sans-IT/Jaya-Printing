@@ -12,9 +12,6 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  if (typeof window !== "undefined") {
-    const hostname = window.location.hostname;
-  }
   const { data } = await axios.get(
     `${process.env.URL}/api/post?title=${params.item}`
   );
@@ -22,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${CompanyName} | ${params.product} - ${params.item}`,
     openGraph: {
-      images: [`${urlImage + "/" + data.source}`],
+      images: [`${urlImage + "/" + data?.source}`],
     },
   };
 }

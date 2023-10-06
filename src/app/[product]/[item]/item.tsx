@@ -17,8 +17,8 @@ type Props = {
   };
 };
 
-function Item({ params }: Props) {
-  const convertItem = params.item.split("-").join(" ");
+function Item({ params }: Props) {  
+  const convertItem = params.item.split("-").join(" ");  
   const { data, isLoading } = useQuery({
     queryFn: async () => {
       const response = await axios.get(`/api/post?title=${convertItem}`);

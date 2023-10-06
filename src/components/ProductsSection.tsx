@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "./ui/button";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { Post } from "@prisma/client";
@@ -64,7 +63,7 @@ function ProductsSection({}: Props) {
             .map((item) => {
               return (
                 <Link
-                  href={item.category + "/" + item.title}
+                  href={item.category + "/" + item.title.split(' ').join('-')}
                   key={item.id}
                   className="w-full h-full cursor-pointer text-center hover:opacity-80 overflow-hidden group"
                 >

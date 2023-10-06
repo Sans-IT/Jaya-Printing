@@ -26,9 +26,9 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Category } from "@prisma/client";
-import { useMutation, useQuery } from "react-query";
+import { useMutation} from "react-query";
 import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Session,
   createClientComponentClient,
@@ -140,7 +140,7 @@ function Post({}: Props) {
           onChange={handleImage}
           ref={ref}
         />
-        <div className="aspect-square relative p-2 border-dashed rounded-md border-4 cursor-pointer border-blue-400">
+        <div className="aspect-video relative p-2 border-dashed rounded-md border-4 cursor-pointer border-blue-400">
           <div
             onClick={() => {
               setImagePreview("");

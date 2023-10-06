@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,7 +27,7 @@ import {
 import { Category } from "@prisma/client";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
-import { notFound, redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Session,
   createClientComponentClient,
@@ -113,19 +112,20 @@ function Page({ params }: Props) {
   // 2. Define a submit handler.
   const { mutate: onSubmit, isLoading }: any = useMutation({
     mutationFn: async (values: z.infer<typeof formSchema>) => {
-      const { error } = await supabase.storage
+      if (uploadedImage){
+        const { error:errorDelete } = await supabase.storage
         .from("source")
         .remove([data?.source ?? ""]);
-      if (uploadedImage) {
+        if (errorDelete) throw new Error(errorDelete.message)
         const { error } = await supabase.storage
           .from("source")
           .upload(form.getValues("source"), uploadedImage as File, {
             cacheControl: "3600",
             upsert: false,
           });
-        if (error) {
-          throw new Error(error.message);
-        }
+          if (error) {
+            throw new Error(error.message);
+          }      
       }
       if (ImagePreview.length === 0) {
         throw new Error("harus ada gambar yang diupload!");
@@ -190,7 +190,7 @@ function Page({ params }: Props) {
             )}
           />
 
-          <div className="aspect-square relative p-2 border-dashed rounded-md border-4 cursor-pointer border-blue-400">
+          <div className="aspect-video relative p-2 border-dashed rounded-md border-4 cursor-pointer border-blue-400">
             <div
               onClick={() => {
                 setImagePreview("");
